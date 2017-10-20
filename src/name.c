@@ -38,20 +38,22 @@ static int name_delete(const char* name)
 static int name_check(const char* name)
 {
 	unsigned int i;
-	char* checkName;
+	char* checkedName;
 
 	if ( !name || !strcmp(name, "") ) return -4; /* no null or empty */
+
+	if ( name[0] == 32 ) return -5; /* cannot start with a space */
 
 	for ( i=0; i<name_count; i++ )
 		if ( !strcmp(name, name_list[i]) ) return -3; /* name taken */
 
-	checkName = name_new(name);
-	if ( strcmp(checkName, name) )
+	checkedName = name_new(name);
+	if ( strcmp(checkedName, name) )
 		return -2; /* name was truncated because it was too long */
 
-	name_delete(checkName);
+	name_delete(checkedName);
 
-	for ( i=0; i<strlen(name); i++ ) /* name has illegal chars */
+	for ( i=0; i<strlen(name); i++ ) /* check for illegal chars */
 		if ( !isalpha(name[i]) && name[i] != 32 ) return -1;
 
 	return 0; /* name is OK to use */

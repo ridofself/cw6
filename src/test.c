@@ -78,6 +78,12 @@ void test_name_check()
 	assert(name_check("") == -4);
 	test_count++;
 
+	assert(name_check(" ") == -5);
+	test_count++;
+
+	assert(name_check(" starts w space") == -5);
+	test_count++;
+
 	assert(!name_check(goodName));
 	assert(!name_check(goodName)); /* checking has no side effects */
 	test_count++;
